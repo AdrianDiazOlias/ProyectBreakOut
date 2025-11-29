@@ -125,6 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4ffcf72c8b59a4fafef07176e0b4ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  vida: 10
+  resistencia: 10
+  puntos: 10
 --- !u!54 &2344330190712101936
 Rigidbody:
   m_ObjectHideFlags: 0
