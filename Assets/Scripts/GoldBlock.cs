@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class GoldBlock : MonoBehaviour
+public class GoldBlock : Block
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float puntosBonus = 10f;
+
     void Start()
     {
-        
+        this.puntos = puntos + puntosBonus;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void BreakBlock()
     {
-        
+        AddPoints(puntos);
+        GameManager.instance.goldBuffActive = true;
+        Destroy(this.gameObject);
     }
 }
