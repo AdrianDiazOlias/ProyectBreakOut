@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Game States")]
     public bool isGameOver = false;
     public bool isGamePaused = false;
+    public bool isGameStarted = false;
     public bool isLevelCompleted = false;
 
     [Header("Buffs & Debuffs")]
