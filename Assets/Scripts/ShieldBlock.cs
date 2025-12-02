@@ -14,7 +14,7 @@ public class ShieldBlock : Block
         }
         else
         {
-            AddPoints(puntos);
+            GameManager.AddPoints(puntos);
             GameManager.instance.shieldBuffActive = true;
             Destroy(this.gameObject);
         }

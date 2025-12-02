@@ -11,7 +11,7 @@ public class GoldBlock : Block
 
     public override void BreakBlock()
     {
-        AddPoints(puntos);
+        GameManager.AddPoints(puntos);
         GameManager.instance.goldBuffActive = true;
         Destroy(this.gameObject);
     }

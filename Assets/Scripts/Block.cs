@@ -22,18 +22,7 @@ public class Block : MonoBehaviour
 
     public virtual void BreakBlock()
     {
-        AddPoints(puntos);
+        GameManager.AddPoints(puntos);
         Destroy(this.gameObject);
-    }
-
-    public void AddPoints(float puntos)
-    {
-        if (GameManager.instance.goldBuffActive)
-        {
-            puntos *= GameManager.instance.goldBuffMultiplier;
-            GameManager.instance.goldBuffActive = false;
-        }
-
-        GameManager.instance.Score += puntos;
     }
 }

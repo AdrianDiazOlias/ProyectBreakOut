@@ -16,4 +16,6 @@ public class SceneManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }

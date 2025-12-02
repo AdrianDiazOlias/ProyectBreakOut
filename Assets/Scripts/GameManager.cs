@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         }
 
         PlayerLives--;
+        ScreenManager.instance.UpdateHealth(PlayerLives);
         Debug.Log("Player took damage. Remaining lives: " + PlayerLives);
 
         if (PlayerLives <= 0)
@@ -91,5 +92,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player has no lives left.");
             GameOver();
         }
+    }
+
+    public static void AddPoints(float puntos)
+    {
+        if (GameManager.instance.goldBuffActive)
+        {
+            puntos *= GameManager.instance.goldBuffMultiplier;
+            GameManager.instance.goldBuffActive = false;
+        }
+
+        GameManager.instance.Score += puntos;
     }
 }
