@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class ShieldBlock : Block
+public class HealthBlock : Block
 {
-
     public override void BreakBlock()
     {
+        GameManager.instance.PlayerHealed();
         GameManager.AddPoints(puntos);
-        GameManager.instance.shieldBuffActive = true;
-        ScreenManager.instance.TriggerUpdateHealth();
         Destroy(this.gameObject);
     }
 }
