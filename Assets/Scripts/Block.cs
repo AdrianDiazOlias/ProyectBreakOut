@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Video;
 
 public class Block : MonoBehaviour
 {
@@ -15,25 +14,33 @@ public class Block : MonoBehaviour
         }
     }
 
-    public void OnHit(int damage)
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            Ball ball = collision.gameObject.GetComponent<Ball>();
+            Bounce(collision);
+            OnHit(ball.damage);
+        }
+    }
+
+    public void OnHit(float damage)
     {
         vida -= damage * (100 / (100 + resistencia));
     }
 
     public virtual void BreakBlock()
     {
-        AddPoints(puntos);
+        GameManager.AddPoints(puntos);
+        Debug.Log($"{this.gameObject.name} destroyed!");
         Destroy(this.gameObject);
     }
 
-    public void AddPoints(float puntos)
+    void Bounce(Collision collision)
     {
-        if (GameManager.instance.goldBuffActive)
-        {
-            puntos *= GameManager.instance.goldBuffMultiplier;
-            GameManager.instance.goldBuffActive = false;
-        }
-
-        GameManager.instance.Score += puntos;
+        Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
+        Vector3 direccion = collision.contacts[0].point - transform.position;
+        direccion = direccion.normalized;
+        ballRb.linearVelocity = direccion * collision.gameObject.GetComponent<Ball>().ballSpeed;
     }
 }
