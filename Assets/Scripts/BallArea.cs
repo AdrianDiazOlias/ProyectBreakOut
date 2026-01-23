@@ -4,10 +4,9 @@ using UnityEngine;
 public class BallArea : MonoBehaviour
 {
     Ball ball;
-    public float radio = 0.5f;
-    public bool KeepInArea = false;
+    Rigidbody ballRb;
+    public float ballRadio = 0.5f;
 
-    public bool isInside;
     public bool isOutsideRight;
     public bool isOutsideLeft;
     public bool isOutsideTop;
@@ -25,47 +24,34 @@ public class BallArea : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 ballPos = ball.GetComponent<Transform>().position;
-        isInside = true;
-        isOutsideLeft = isOutsideRight = isOutsideTop = isOutsideBottom = false;
+        Vector3 ballPos = ball.transform.position;
+        Vector3 ballSpeed = ballRb.linearVelocity;
 
-        if (ballPos.x > areaWidth - radio)
+
+        isOutsideLeft = isOutsideRight = isOutsideTop = isOutsideBottom = false;
+        if (ballPos.x > areaWidth - ballRadio && ballSpeed.x > 0)
         {
             isOutsideRight = true;
-            isInside = false;
         }
-        if (ballPos.x < -areaWidth + radio)
+        if (ballPos.x < -areaWidth + ballRadio && ballSpeed.x < 0)
         {
             isOutsideLeft = true;
-            isInside = false;
         }
-        if (ballPos.y > areaHeight - radio)
+        if (ballPos.y > areaHeight - ballRadio && ballSpeed.y > 0)
         {
             isOutsideTop = true;
-            isInside = false;
         }
-        if (ballPos.y < -areaHeight + radio)
+        if (ballPos.y < -areaHeight + ballRadio && ballSpeed.y < 0)
         {
             isOutsideBottom = true;
-            isInside = false;
-        }
-
-        isInside = !(isOutsideRight || isOutsideLeft || isOutsideTop || isOutsideBottom);
-        if (KeepInArea && !isInside)
-        {
-            isInside = true;
-            Invoke("ResetKeepInArea", 0.1f);
         }
     }
 
     public void SetBallInScene(GameObject ballGO)
     {
         ball = ballGO.GetComponent<Ball>();
-    }
-
-    void ResetKeepInArea()
-    {
-        KeepInArea = false;
+        ballRb = ballGO.GetComponent<Rigidbody>();
+        ballRadio = ballRb.transform.localScale.x;
     }
 
     void OnDrawGizmos()

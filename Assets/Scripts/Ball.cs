@@ -32,18 +32,14 @@ public class Ball : MonoBehaviour
 
     void Update()
     {
-        // Input en Update (no física)
         if (Input.GetKeyDown(KeyCode.Space) && !GameManager.instance.isGameStarted)
         {
             this.transform.SetParent(null);
             GameManager.instance.isGameStarted = true;
 
-            // Lanzar usando velocity o AddForce — velocity es más predecible
             rb.linearVelocity = transform.up * ballSpeed;
         }
 
-        // Física y rebotes en FixedUpdate
-        // Guardamos la velocidad actual
         Vector3 incoming = rb.linearVelocity;
 
         if (incoming.sqrMagnitude < 0.0001f)
@@ -60,37 +56,31 @@ public class Ball : MonoBehaviour
         }
 
 
-        if (ballArea.isOutsideTop && !ballArea.isInside)
+        if (ballArea.isOutsideTop)
         {
             Debug.Log("Top Bounce");
-            // Normal apuntando hacia abajo (superficie superior)
             Vector3 normal = Vector3.down;
             Vector3 reflected = Vector3.Reflect(incoming.normalized, normal) * ballSpeed;
             rb.linearVelocity = reflected;
             ballArea.isOutsideTop = false;
-            ballArea.KeepInArea = true;
         }
 
-        if (ballArea.isOutsideLeft && !ballArea.isInside)
+        if (ballArea.isOutsideLeft)
         {
             Debug.Log("Left Bounce");
-            // Normal de la pared izquierda apunta hacia la derecha
             Vector3 normal = Vector3.right;
             Vector3 reflected = Vector3.Reflect(incoming.normalized, normal) * ballSpeed;
             rb.linearVelocity = reflected;
             ballArea.isOutsideLeft = false;
-            ballArea.KeepInArea = true;
         }
 
-        if (ballArea.isOutsideRight && !ballArea.isInside)
+        if (ballArea.isOutsideRight)
         {
             Debug.Log("Right Bounce");
-            // Normal de la pared derecha apunta hacia la izquierda
             Vector3 normal = Vector3.left;
             Vector3 reflected = Vector3.Reflect(incoming.normalized, normal) * ballSpeed;
             rb.linearVelocity = reflected;
             ballArea.isOutsideRight = false;
-            ballArea.KeepInArea = true;
         }
 
     }
